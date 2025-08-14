@@ -21,8 +21,8 @@ func main() {
 			}
 		}
 	}(ctx)
-
 	time.Sleep(5 * time.Second)
-	fmt.Println("Отмена контекста")
 	cancel()
+	time.Sleep(100 * time.Millisecond)
+	fmt.Println("Отмена контекста")
 }
