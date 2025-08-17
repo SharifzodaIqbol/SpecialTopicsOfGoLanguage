@@ -76,7 +76,7 @@ func saveHadler(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(msg)
 
 	} else {
-		msg := "Недостаточно средств:" + strconv.Itoa(money)
+		msg := "Недостаточно средств!\nВаш счет:" + strconv.Itoa(money)
 		w.Write([]byte(msg))
 		fmt.Println(msg)
 	}
