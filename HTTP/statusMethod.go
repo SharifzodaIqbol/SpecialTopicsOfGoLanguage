@@ -18,6 +18,10 @@ var money = 1000
 var bank = 0
 
 func payHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPatch {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
 	requestBody, err := io.ReadAll(r.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -52,8 +56,13 @@ func payHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func saveHadler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPatch {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
 	requestBody, err := io.ReadAll(r.Body)
 	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		msg := "fail to read HTTP body" + err.Error()
 		w.Write([]byte(msg))
 		fmt.Println(msg)
@@ -62,6 +71,7 @@ func saveHadler(w http.ResponseWriter, r *http.Request) {
 	value, err := strconv.Atoi(string(requestBody))
 
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		msg := "formatting error:" + err.Error()
 		w.Write([]byte(msg))
 		fmt.Println(msg)
