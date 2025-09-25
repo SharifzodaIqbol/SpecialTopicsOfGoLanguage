@@ -18,8 +18,6 @@ func TestFooer2(t *testing.T) {
 	if result != "Foo" {
 		t.Errorf("Result was incorrect, got: %s, was: %s", result, "Foo")
 	}
-	t.Fatalf("Stop the test now, we have seen enough")
-	t.Error("This won't be executed")
 }
 
 func TestFooerTableDriven(t *testing.T) {
@@ -40,5 +38,30 @@ func TestFooerTableDriven(t *testing.T) {
 				t.Errorf("got: %s, want %s", ans, tt.want)
 			}
 		})
+	}
+}
+func TestFoorParallel(t *testing.T) {
+	t.Run("Test 3 in Parallel", func(t *testing.T) {
+		t.Parallel()
+		result := Fooer(3)
+		if result != "Foo" {
+			t.Errorf("Result was incorrect, got: %s, want: %s.", result, "Foo")
+		}
+	})
+	t.Run("Test 7 in Parallel", func(t *testing.T) {
+		t.Parallel()
+		result := Fooer(7)
+		if result != "7" {
+			t.Errorf("Result was incorrect, got: %s, want: %s.", result, "7")
+		}
+	})
+}
+func TestFooerSkipped(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
+	result := Fooer(4)
+	if result != "4" {
+		t.Errorf("Result was incorrect, got: %s, want: %s.", result, "4")
 	}
 }
