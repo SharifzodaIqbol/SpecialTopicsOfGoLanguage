@@ -25,6 +25,7 @@ func main() {
 		}
 		result = append(result, char)
 	}
+	fmt.Println(string(result))
 	dataFile, err := io.ReadAll(source)
 	if err != nil {
 		log.Fatal(err)
